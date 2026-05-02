@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PlayConnect | Sales & Outreach Assessment</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .option:hover { transform: translateY(-2px); }
+    .selected { background-color: #3b82f6; color: white; border-color: #2563eb; }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <div class="max-w-3xl mx-auto p-6">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-2xl">P</div>
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">PlayConnect</h1>
+          <p class="text-sm text-gray-500">Sales & Outreach Assessment</p>
+        </div>
+      </div>
+      <div id="timer" class="text-lg font-mono font-semibold text-gray-600"></div>
+    </div>
+
+    <!-- Progress -->
+    <div class="mb-8">
+      <div class="flex justify-between text-sm mb-2">
+        <span id="progress-text" class="font-medium">Question <span id="current-q">1</span>/30</span>
+        <span id="score" class="font-medium text-blue-600">Score: 0</span>
+      </div>
+      <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+        <div id="progress-bar" class="h-2 bg-blue-600 rounded-full w-0 transition-all"></div>
+      </div>
+    </div>
+
+    <!-- Quiz Container -->
+    <div id="quiz-container" class="bg-white rounded-3xl shadow-xl p-8 mb-8">
+      <h2 id="question-text" class="text-xl font-semibold text-gray-800 mb-8 leading-relaxed"></h2>
+      
+      <div id="options" class="grid grid-cols-1 gap-4"></div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="flex justify-between items-center">
+      <button onclick="prevQuestion()" id="prev-btn"
+        class="px-6 py-3 text-gray-600 hover:text-gray-800 flex items-center gap-2 font-medium">
+        <i class="fas fa-arrow-left"></i> Previous
+      </button>
+      
+      <button onclick="nextQuestion()" id="next-btn"
+        class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-semibold flex items-center gap-2">
+        Next <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+
+    <!-- Results Screen -->
+    <div id="results-screen" class="hidden bg-white rounded-3xl shadow-xl p-10 text-center">
+      <div class="mb-8">
+        <i class="fas fa-trophy text-6xl text-yellow-500"></i>
+      </div>
+      <h2 class="text-3xl font-bold text-gray-800 mb-2">Assessment Complete!</h2>
+      <p class="text-gray-600 mb-8">Your Sales & Outreach Score</p>
+      
+      <div class="inline-flex items-center justify-center w-40 h-40 rounded-full border-8 border-blue-100 mb-8">
+        <div class="text-center">
+          <div id="final-score" class="text-6xl font-bold text-blue-600">85</div>
+          <div class="text-sm text-gray-500">out of 30</div>
+        </div>
+      </div>
+
+      <div id="performance" class="text-2xl font-semibold mb-6"></div>
+      
+      <button onclick="restartQuiz()" 
+        class="px-10 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-semibold text-lg">
+        Retake Assessment
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // === 30 MCQ Questions for Sales & Outreach ===
+    const questions = [
+      {
+        q: "What is the primary goal of the Discovery stage in sales?",
+        options: [
+          "To pitch product features aggressively",
+          "To understand the prospect’s challenges, needs, and priorities",
+          "To send pricing details immediately",
+          "To close the deal in the first call"
+        ],
+        correct: 1
+      },
+      {
+        q: "What does ICP stand for in sales?",
+        options: [
+          "Important Client Prospect",
+          "Ideal Customer Profile",
+          "Internal Conversion Process",
+          "Immediate Closing Pitch"
+        ],
+        correct: 1
+      },
+      {
+        q: "Which is usually the strongest opening in a cold call?",
+        options: [
+          "Hi, I'm calling from PlayConnect...",
+          "Do you have a minute?",
+          "I noticed you're facing challenges with [specific pain]...",
+          "We have the best product in the market"
+        ],
+        correct: 2
+      },
+      {
+        q: "What is the best practice for cold email subject lines?",
+        options: [
+          "Use ALL CAPS for attention",
+          "Keep it under 6-8 words and relevant",
+          "Always include company name",
+          "Make it very long with offers"
+        ],
+        correct: 1
+      },
+      {
+        q: "How should you respond to 'It's too expensive'?",
+        options: [
+          "Immediately offer a discount",
+          "Ask what they are comparing it to and discuss ROI",
+          "Say many customers feel the same",
+          "Change the topic"
+        ],
+        correct: 1
+      },
+      {
+        q: "What does SQL mean?",
+        options: [
+          "Sales Qualified Lead",
+          "System Qualified Lead",
+          "Senior Quality Lead",
+          "Strategic Qualified Lead"
+        ],
+        correct: 0
+      },
+      {
+        q: "What is the ideal number of touchpoints in a modern outreach sequence?",
+        options: [
+          "2-4",
+          "8-12",
+          "15+",
+          "Only 1 strong email"
+        ],
+        correct: 1
+      },
+      {
+        q: "SPIN Selling stands for:",
+        options: [
+          "Situation, Problem, Implication, Need-payoff",
+          "Sales, Prospecting, Interest, Negotiation",
+          "Speed, Price, Innovation, Negotiation",
+          "Strategy, Pitch, Interaction, Negotiation"
+        ],
+        correct: 0
+      },
+      {
+        q: "Which metric matters most for an SDR in first 6 months?",
+        options: [
+          "Revenue closed",
+          "Number of qualified meetings booked",
+          "Emails sent per day",
+          "Social media engagement"
+        ],
+        correct: 1
+      },
+      {
+        q: "Best way to handle 'I'm not interested'?",
+        options: [
+          "Apologize and end call",
+          "Ask a question to understand why",
+          "Keep pushing features",
+          "Send more emails immediately"
+        ],
+        correct: 1
+      },
+      {
+        q: "What is the 80/20 rule in sales?",
+        options: [
+          "80% of calls lead to meetings",
+          "80% of revenue comes from 20% of customers",
+          "Spend 80% time on prospecting",
+          "Close 80% of deals"
+        ],
+        correct: 1
+      },
+      {
+        q: "Which closing technique offers the buyer two choices?",
+        options: [
+          "Assumptive Close",
+          "Alternative Close",
+          "Urgency Close",
+          "Trial Close"
+        ],
+        correct: 1
+      },
+      {
+        q: "What is a good follow-up strategy after a meeting?",
+        options: [
+          "Send a generic thank you",
+          "Send a summary of discussed points + next steps",
+          "Wait for them to reply",
+          "Call them the same day"
+        ],
+        correct: 1
+      },
+      {
+        q: "The ABC of sales means:",
+        options: [
+          "Always Be Courteous",
+          "Always Be Closing",
+          "Always Be Creative",
+          "Always Be Confident"
+        ],
+        correct: 1
+      },
+      {
+        q: "Best tool category for outreach automation?",
+        options: [
+          "Canva & Photoshop",
+          "Apollo, Instantly, Lemlist",
+          "Zoom & Google Meet",
+          "Excel & Word"
+        ],
+        correct: 1
+      },
+      {
+        q: "What should you do when a prospect keeps delaying?",
+        options: [
+          "Follow up daily",
+          "Send a polite breakup email",
+          "Stop contacting",
+          "CC their manager"
+        ],
+        correct: 1
+      },
+      {
+        q: "Which is NOT a good cold email practice?",
+        options: [
+          "Personalization",
+          "Clear value proposition",
+          "Long paragraphs about your company",
+          "Strong CTA"
+        ],
+        correct: 2
+      },
+      {
+        q: "What is a Trial Close?",
+        options: [
+          "Giving a free trial",
+          "Testing readiness to buy before final close",
+          "Closing on a trial basis",
+          "Ending the conversation"
+        ],
+        correct: 1
+      },
+      {
+        q: "After closing a deal, the next important step is:",
+        options: [
+          "Move to next prospect",
+          "Proper onboarding and ask for referrals",
+          "Wait for customer to reach out",
+          "Send invoice only"
+        ],
+        correct: 1
+      },
+      {
+        q: "What is the best time for cold calls (generally)?",
+        options: [
+          "9-10 AM or 4-5 PM",
+          "After 7 PM",
+          "Between 1-3 PM",
+          "Early morning before 8 AM"
+        ],
+        correct: 0
+      },
+      {
+        q: "Value-based selling focuses on:",
+        options: [
+          "Lowest price",
+          "ROI and business outcomes",
+          "Product features",
+          "Brand reputation only"
+        ],
+        correct: 1
+      },
+      {
+        q: "What does MEDDIC stand for (Sales Methodology)?",
+        options: [
+          "Metrics, Economic Buyer, Decision Criteria, Decision Process, Identify Pain, Champion",
+          "Money, Effort, Deal, Done, Invest, Close",
+          "Manage, Educate, Demonstrate, Discuss, Implement, Close",
+          "None of the above"
+        ],
+        correct: 0
+      },
+      {
+        q: "Best way to start a LinkedIn outreach message?",
+        options: [
+          "Directly pitch your product",
+          "Comment on their recent post or achievement",
+          "Send company brochure",
+          "Ask for a meeting immediately"
+        ],
+        correct: 1
+      },
+      {
+        q: "What is Pipeline Velocity?",
+        options: [
+          "Speed of deals moving through sales stages",
+          "Number of calls made per day",
+          "Total number of leads",
+          "Average deal size"
+        ],
+        correct: 0
+      },
+      {
+        q: "How do you handle price objection effectively?",
+        options: [
+          "Focus on cost vs value",
+          "Always discount",
+          "Ignore and move on",
+          "Say it's the best price"
+        ],
+        correct: 0
+      },
+      {
+        q: "What is the purpose of a sales demo?",
+        options: [
+          "Show all features",
+          "Show how your solution solves their specific problem",
+          "Talk about company history",
+          "Impress with animations"
+        ],
+        correct: 1
+      },
+      {
+        q: "Which is a strong qualifying question?",
+        options: [
+          "How are you?",
+          "What are your biggest challenges with [area] right now?",
+          "Do you like our product?",
+          "What's your budget?"
+        ],
+        correct: 1
+      },
+      {
+        q: "What should you do after losing a deal?",
+        options: [
+          "Move on quickly",
+          "Ask for feedback and learn from it",
+          "Blame the prospect",
+          "Stop reaching out forever"
+        ],
+        correct: 1
+      },
+      {
+        q: "What is 'Social Proof' in sales?",
+        options: [
+          "Showing testimonials, case studies, logos",
+          "Following prospects on social media",
+          "Posting daily on LinkedIn",
+          "Using pressure tactics"
+        ],
+        correct: 0
+      },
+      {
+        q: "Final question: The most important skill for long-term sales success is:",
+        options: [
+          "Being pushy",
+          "Building genuine relationships and trust",
+          "Knowing every feature",
+          "Being the cheapest"
+        ],
+        correct: 1
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answers = new Array(questions.length).fill(null);
+    let timerInterval;
+    let timeLeft = 1800; // 30 minutes
+
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        document.getElementById('timer').textContent = 
+          `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          showResults();
+        }
+      }, 1000);
+    }
+
+    function loadQuestion() {
+      const q = questions[currentQuestion];
+      document.getElementById('current-q').textContent = currentQuestion + 1;
+      document.getElementById('progress-bar').style.width = `${((currentQuestion + 1) / 30) * 100}%`;
+      document.getElementById('question-text').textContent = q.q;
+
+      const optionsDiv = document.getElementById('options');
+      optionsDiv.innerHTML = '';
+
+      q.options.forEach((option, index) => {
+        const div = document.createElement('div');
+        div.className = `option p-5 border-2 border-gray-200 rounded-2xl cursor-pointer transition-all text-lg ${answers[currentQuestion] === index ? 'selected' : ''}`;
+        div.innerHTML = option;
+        div.onclick = () => selectAnswer(index);
+        optionsDiv.appendChild(div);
+      });
+
+      document.getElementById('prev-btn').style.display = currentQuestion === 0 ? 'none' : 'flex';
+    }
+
+    function selectAnswer(index) {
+      answers[currentQuestion] = index;
+      
+      // Visual feedback
+      const options = document.querySelectorAll('#options > div');
+      options.forEach((opt, i) => {
+        opt.classList.toggle('selected', i === index);
+      });
+
+      // Auto move to next after selection (optional)
+      setTimeout(() => {
+        if (currentQuestion < questions.length - 1) {
+          currentQuestion++;
+          loadQuestion();
+        }
+      }, 800);
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        loadQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        loadQuestion();
+      }
+    }
+
+    function calculateScore() {
+      score = 0;
+      answers.forEach((answer, index) => {
+        if (answer === questions[index].correct) score++;
+      });
+      return score;
+    }
+
+    function showResults() {
+      clearInterval(timerInterval);
+      const finalScore = calculateScore();
+      const percentage = Math.round((finalScore / 30) * 100);
+
+      document.getElementById('quiz-container').classList.add('hidden');
+      const results = document.getElementById('results-screen');
+      results.classList.remove('hidden');
+
+      document.getElementById('final-score').textContent = finalScore;
+      
+      let performanceText = "";
+      if (percentage >= 85) performanceText = "🏆 Outstanding! You're ready for top-tier sales roles";
+      else if (percentage >= 70) performanceText = "🎯 Strong Performance! Great foundation";
+      else if (percentage >= 55) performanceText = "👍 Good! Room to grow";
+      else performanceText = "Keep learning! Sales is a skill that improves with practice";
+
+      document.getElementById('performance').innerHTML = `${percentage}% - ${performanceText}`;
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answers = new Array(questions.length).fill(null);
+      timeLeft = 1800;
+      
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('results-screen').classList.add('hidden');
+      loadQuestion();
+      startTimer();
+    }
+
+    // Initialize Quiz
+    window.onload = () => {
+      loadQuestion();
+      startTimer();
+    };
+  </script>
+</body>
+</html>
