@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaushal Bodh: E-Waste Management Project</title>
+    <style>
+        :root {
+            --danger: #e67e22;
+            --success: #27ae60;
+            --primary: #2c3e50;
+            --bg: #f4f7f6;
+        }
+        body { font-family: 'Trebuchet MS', sans-serif; background: var(--bg); padding: 20px; color: #333; }
+        .container { max-width: 850px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 8px solid var(--danger); }
+        header { text-align: center; margin-bottom: 30px; }
+        .section { background: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        h2 { color: var(--danger); border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .audit-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .audit-table th, .audit-table td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        .audit-table th { background: #f9f9f9; }
+        textarea { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; margin-top: 10px; box-sizing: border-box; }
+        .btn-print { background: var(--success); color: white; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em; display: block; margin: 30px auto; }
+        .warning-box { background: #fff3cd; border-left: 5px solid #ffecb5; padding: 15px; margin: 10px 0; color: #856404; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>♻️ E-Waste Management Project</h1>
+            <p><strong>Kaushal Bodh | Grade 7 | Vocational Project</strong></p>
+            <p>Transforming "Trash" into "Treasure" or "Safe Disposal"</p>
+        </header>
+        <div class="video-container">
+            <iframe width="810" height="455" src="https://www.youtube.com/embed/MQLadfsvfLo" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <div class="section">
+            <h2>Step 1: The Home E-Waste Audit</h2>
+            <p>Search your house (drawers, cupboards, storerooms) for electronic items that are no longer in use.</p>
+            <table class="audit-table">
+                <tr><th>Item Name</th><th>Status (Broken/Old)</th><th>Potential Hazard (Battery/Screen)</th></tr>
+                <tr><td><input type="text" placeholder="e.g. Old Smartphone"></td><td><input type="text"></td><td><input type="text"></td></tr>
+                <tr><td><input type="text" placeholder="e.g. Broken Headphones"></td><td><input type="text"></td><td><input type="text"></td></tr>
+                <tr><td><input type="text" placeholder="e.g. Remote Control"></td><td><input type="text"></td><td><input type="text"></td></tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Step 2: Understanding the Danger</h2>
+            <p>Why shouldn't we throw a mobile phone battery into the regular green/blue dustbin?</p>
+            <textarea rows="3" placeholder="Think about chemicals like Lithium or Lead..."></textarea>
+        </div>
+
+        <div class="section">
+            <h2>Step 3: The 3R Strategy (Reduce, Reuse, Recycle)</h2>
+            <div class="warning-box">
+                <strong>Activity:</strong> Find ONE piece of E-Waste and think of a way to "Upcycle" or "Properly Dispose" of it.
+            </div>
+            <p><strong>Item chosen:</strong> <input type="text"></p>
+            <p><strong>My Plan:</strong></p>
+            <textarea rows="4" placeholder="Will you donate it? Give it to a certified recycler? Or turn the outer shell into art?"></textarea>
+        </div>
+
+        <div class="section">
+            <h2>Step 4: Locate a Recycler</h2>
+            <p>Use the internet to find the nearest **Certified E-Waste Collection Center** or a brand-specific "Take-back" point (like Apple, Samsung, or Croma).</p>
+            <p>Center Name: <input type="text"></p>
+            <p>Distance from home: <input type="text"> km</p>
+        </div>
+
+        <button class="btn-print" onclick="window.print()">Save Worksheet as PDF</button>
+    </div>
+</body>
+</html>
