@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIY Hydroponics Project</title>
+    <style>
+        :root { --leaf: #2ecc71; --water: #3498db; --bg: #f4f9f4; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); padding: 20px; line-height: 1.6; }
+        .container { max-width: 850px; margin: 0 auto; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-top: 10px solid var(--leaf); }
+        .section { margin-bottom: 30px; border: 1px solid #eee; padding: 20px; border-radius: 10px; }
+        h1, h2 { color: var(--leaf); }
+        h3 { color: var(--water); }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background: #e8f8f5; }
+        textarea, input[type="text"], input[type="date"] { width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #ddd; box-sizing: border-box; }
+        .print-btn { background: var(--leaf); color: white; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; display: block; margin: 20px auto; }
+        .materials-list { background: #eaf2f8; padding: 15px; border-radius: 8px; border-left: 5px solid var(--water); }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 20px 0; border-radius: 10px; border: 2px solid var(--leaf); }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center;">🌱 DIY Hydroponics: The Wick System</h1>
+        <p style="text-align: center;"><strong>Summer Holiday Assignment | Grades 8 & 9 | Science & Sustainability</strong></p>
+
+        <div class="section">
+            <h2>The Challenge</h2>
+            <p>Traditional agriculture requires vast amounts of fertile soil and water. As our urban spaces grow, we face a dual challenge: high plastic waste and limited space for greenery. How can we use "waste" materials to grow food efficiently without using a single handful of garden soil?</p>
+            <div class="materials-list">
+                <strong>Materials Checklist:</strong>
+                <ul>
+                    <li>Used 2L PET Bottle</li>
+                    <li>Cotton cloth / Thick wick</li>
+                    <li>Growth medium (Cocopeat/Perlite)</li>
+                    <li>Cutter (Use with adult help)</li>
+                    <li>Seeds (Basil, Spinach, or Methi)</li>
+                    <li>Clean Water</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>DIY Procedure</h2>
+            <ol>
+                <li><strong>Cut the Bottle:</strong> Cut the PET bottle into two parts: a top funnel and a bottom reservoir.</li>
+                <li><strong>Make a Hole:</strong> Make a hole in the bottle cap.</li>
+                <li><strong>Attach Wick:</strong> Thread the cotton wick through the hole in the bottle cap.</li>
+                <li><strong>Assemble:</strong> Invert the top part into the bottom part like a funnel.</li>
+                <li><strong>Fill up:</strong> Fill the bottom with water and the top with your growth medium. Ensure the wick is buried in the medium and submerged in the water.</li>
+                <li><strong>Plant:</strong> Plant your seeds and place the system in a sunlit area.</li>
+            </ol>
+        </div>
+
+        <div class="section">
+            <h2>Task 1: Observation Log</h2>
+            <p>Record your data over a 15-day period to track the growth of your "Hydro-Plant."</p>
+            <table>
+                <tr><th>Criteria</th><th>Observations / Data</th></tr>
+                <tr><td>Plant Species</td><td><input type="text" placeholder="e.g., Basil"></td></tr>
+                <tr><td>Date of Sowing</td><td><input type="date"></td></tr>
+                <tr><td>Day of Germination</td><td><input type="text" placeholder="e.g., Day 4"></td></tr>
+                <tr><td>Weekly Water Level</td><td><input type="text" placeholder="Week 1: __ cm | Week 2: __ cm"></td></tr>
+                <tr><td>Final Height (Day 15)</td><td><input type="text" placeholder="Height in cm"></td></tr>
+                <tr><td>Survival Rate</td><td><input type="text" placeholder="Seeds planted: __ | Plants survived: __"></td></tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Task 2: Critical Thinking & Research</h2>
+            <p>1. The Science Core: Explain in your own words how the wick uses "capillary action" to help the plant grow without soil.</p>
+            <textarea rows="3"></textarea>
+            <p>2. Why is it important to practice upcycling by reusing PET bottles instead of just throwing them away?</p>
+            <textarea rows="3"></textarea>
+            <p>3. How could this hydroponic system be useful for astronauts on a long mission to Mars?</p>
+            <textarea rows="3"></textarea>
+        </div>
+        
+        <div class="section" style="background-color: #fff8e1; border-color: #ffc107;">
+            <h2 style="color: #ff9800;">🚀 Innovation Challenge</h2>
+            <p>Pick ONE way to upgrade your system and describe your plan below: (A) Create a vertical stack of 3 bottles, (B) Add liquid nutrients and compare to a plain water setup, or (C) Decorate your bottle using eco-friendly paints.</p>
+            <textarea rows="2" placeholder="My upgrade plan is..."></textarea>
+        </div>
+
+        <button class="print-btn" onclick="window.print()">Save Progress (PDF)</button>
+    </div>
+</body>
+</html>
